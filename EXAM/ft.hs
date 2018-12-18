@@ -1,27 +1,46 @@
 import Data.List
 
-ft_sinInt :: Double -> Double -> Double
-ft_sinInt strt end
-    | strt < end = (+) ((*) ((/) ((+) (sin strt) ((+) (sin strt) 0.000001)) (2)) (0.000001)) (ft_sinInt ((+) strt 0.000001) end)
+
+
+-- функции для использования: ft_Int, ft_rev_fl, ft_allex, ft_translate, ft_double_repeat, ft_delf, ft_part , ft_insert_elem
+
+
+
+ft_Int :: (Double -> Double) -> Double -> Double -> Double -> Double
+ft_Int func strt end step
+    | strt < end  = ((/) (end - strt) step) * ((((func strt) / 2) + ((func end) / 2)) + (ft_sum func strt end ((end - strt) /step)))
     | strt == end = 0
+    | strt > end = 0
+
+ft_sum :: (Double -> Double) -> Double -> Double -> Double -> Double
+ft_sum func start end step
+    | (start) < end = (func  start) + (ft_sum func (start + step) end step)
     | otherwise = 0
 
-ft_deln :: Ord a => Int -> [a] -> [a]
-ft_deln n [] = error "empty"
-ft_deln n (x : xs)
-    | n > 1 = [x] ++ ft_deln (n - 1) xs
-    | n == 0 = error "Error!!! n = 0"
-    | otherwise = xs
+ft_cube :: Double -> Double
+ft_cube x = x * x * x
+
+ft_line :: Double -> Double
+ft_line x = x
+
+ft_delf :: [a] -> Int -> [a]
+ft_delf [] _ = []
+ft_delf xs n
+    | n > 0 = (ft_first_part xs ((-) n 1)) ++ (ft_delf(ft_start_from xs n) n)
+    | otherwise = []
+
 
 ft_rev_fl :: [a] -> [a]
-ft_rev_fl [] = error "empty" --exception for one elem is in "last"func
-ft_rev_fl (x : xs) = [last xs] ++ (init xs) ++ [x]
+ft_rev_fl (x : xs) = [ft_end (xs)] ++ ft_allex (xs) ++ [x]
 
-ft_part :: [a] -> Int -> Int -> ([a],[a])
-ft_part [] _ _ = error "empty"
-ft_part (xs) m n
-    | ((+) m n) == (length xs) = (take m xs, drop ((-) (length xs)n) xs)
-    | otherwise = error "Enter the valid values!!! (m + n = length)"
+ft_allex :: [a] -> [a]
+ft_allex [x] = []
+ft_allex [x, y] = [x]
+ft_allex (x : xs) = [x] ++ (ft_allex xs)
+
+ft_end :: [a] -> a
+ft_end [x] = x
+ft_end (x : xs) = ft_end xs
 
 ft_translate :: Int -> [Char]
 ft_translate n
@@ -53,3 +72,23 @@ ft_insert_elem (x : xs) y pos
    | ((+) (length xs) 1) < pos = error "Enter the valid values!!!"
    | pos == 0 = [y]++ [x]++ xs
    | otherwise = [x]++ ft_insert_elem xs y ((-) pos 1)
+
+ft_part :: [a] -> Int -> Int -> ([a],[a])
+ft_part [] _ _ = ([],[])
+ft_part xs a b
+   | ((+) a b) == (length (xs)) = ((ft_first_part xs a), (ft_start_from xs ((-) (length xs) b)))
+   | otherwise = error "error!!! Wrong values of lengths"
+
+ft_start_from :: [a] -> Int -> [a]
+ft_start_from [] _ = []
+ft_start_from (x : xs) len
+   | len > 0 = ft_start_from xs ((-) len 1)
+   | len == 0 = (x : xs)
+   | otherwise = error "error!!! Wrong value of length"
+
+ft_first_part :: [a] -> Int -> [a]
+ft_first_part [] _ = []
+ft_first_part (x : xs) len
+   | len > 0 = [x] ++ (ft_first_part xs ((-) len 1))
+   | len == 0 = []
+   | otherwise = error "error!!! Wrong value of length"
