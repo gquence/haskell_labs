@@ -5,16 +5,22 @@ import Data.List
 -- функции для использования: ft_Int, ft_rev_fl, ft_allex, ft_translate, ft_double_repeat, ft_delf, ft_part , ft_insert_elem
 
 
+ft_Int1 :: (Double -> Double) -> Double -> Double -> Double -> Double
+ft_Int1 func start end step
+    | (start + ((end - start) / (step - 1))) < end = ((end - start) / (2 * step)) * ((func start) + (func (start + ((end - start) / step)))) + (ft_Int1 func (start + ((end - start) / step)) end (step - 1))
+    | otherwise = 0
+
+
 
 ft_Int :: (Double -> Double) -> Double -> Double -> Double -> Double
 ft_Int func strt end step
-    | strt < end  = ((/) (end - strt) step) * ((((func strt) / 2) + ((func end) / 2)) + (ft_sum func strt end ((end - strt) /step)))
+    | strt < end  = ((/) (end - strt) step) * ((((func strt) / 2) + ((func end) / 2)) + (ft_sum func (strt + ((end-strt)/step)) end ((end - strt) /step)))
     | strt == end = 0
     | strt > end = 0
 
 ft_sum :: (Double -> Double) -> Double -> Double -> Double -> Double
 ft_sum func start end step
-    | (start) < end = (func  start) + (ft_sum func (start + step) end step)
+    | (start + step) < end = (func  start) + (ft_sum func (start + step) end step)
     | otherwise = 0
 
 ft_cube :: Double -> Double
