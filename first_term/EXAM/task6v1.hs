@@ -14,13 +14,13 @@ ft_equation [x, y, z]
     | x == y && y == z = (" = ") ++ (show y) ++ (" = ") ++ (show z)
     | ((+) x y) == z =  (" + ") ++ (show y) ++ (" = ") ++ (show z)
     | ((-) x y) == z =  (" - ") ++ (show y) ++ (" = ") ++ (show z)
---    | ((*) x y) == z =  (" * ") ++ (show y) ++ (" = ") ++ (show z)
+    | ((*) x y) == z =  (" * ") ++ (show y) ++ (" = ") ++ (show z)
 --    | ((/) x y) == z =  (" / ") ++ (show y) ++ (" = ") ++ (show z)
     | otherwise = "!"
 ft_equation (x : y : xs)
     | last (ft_equation ((+) x y : xs)) /= '!' =  (" + ") ++ (show y) ++ (ft_equation (((+) x y) : xs))
     | last (ft_equation ((-) x y : xs)) /= '!' = (" - ") ++ (show y) ++ (ft_equation (((-) x y) : xs))
---    | last (ft_equation ((*) x y : xs)) /= '!' = (" * ") ++ (show y) ++ (ft_equation (((*) x y) : xs))
+    | last (ft_equation ((*) x y : xs)) /= '!' = (" * ") ++ (show y) ++ (ft_equation (((*) x y) : xs))
 --    | last (ft_equation ((/) x y : xs)) /= '!' = (" / ") ++ (show y) ++ (ft_equation (((/) x y) : xs))
     | (x == y) && last (ft_equation (y : xs)) /= '!' = (" = ") ++ (show y) ++ (ft_equation (y : xs))
     | otherwise = "!"
