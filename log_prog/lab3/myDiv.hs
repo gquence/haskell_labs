@@ -1,3 +1,4 @@
+
 myDiv :: Int -> Int -> (Int, Int)
 myDiv x y
     | x >= y = (fst_res, sec_res)
