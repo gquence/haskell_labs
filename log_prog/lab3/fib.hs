@@ -12,5 +12,8 @@ fibN x = fibn x
     fibn 2 = 1
     fibn n  = (fibn (n-1)) + (fibn (n-2))
 
-fib_map :: [Int]
-fib_map = map fibN [1,2 ..]
+fib_map :: [Integer]
+fib_map = map fibN [1, 2 ..]
+
+fib_zip :: [Integer]
+fib_zip = 0 : 1 : zipWith (+) fib_zip (tail fib_zip)

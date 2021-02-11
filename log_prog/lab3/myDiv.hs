@@ -1,5 +1,5 @@
 
-myDiv :: Int -> Int -> (Int, Int)
+myDiv :: Integer -> Integer -> (Integer, Integer)
 myDiv x y
     | (x < 0) && (y < 0) = myDiv (-x) (-y)
     | (x < 0) || (y < 0) = ((-fst_res), sec_res)
