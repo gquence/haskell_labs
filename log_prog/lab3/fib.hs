@@ -6,11 +6,13 @@ fibN_naive x
 
 fibN :: Integer -> Integer
 fibN x | x < 0 = error "fibN: Input number must be lower than 0"
-fibN x = fibn x
-  where
-    fibn 1 = 1
-    fibn 2 = 1
-    fibn n  = (fibn (n-1)) + (fibn (n-2))
+fibN x = tail_fib 1 1 x
+
+tail_fib :: Integer ->  Integer ->  Integer ->  Integer
+tail_fib first second iter
+  | iter < 1 = first
+  | iter == 2 = second
+  | otherwise = tail_fib second (first + second) (iter - 1)
 
 fib_map :: [Integer]
 fib_map = map fibN [1, 2 ..]

@@ -12,15 +12,20 @@ import Data.Maybe ( fromJust )
 --}
 
 vigenere :: [Char] -> [Int] -> String -> String
-vigenere [] [] [] = []
 vigenere xs [y] [z] = [ vigenere_elem xs y z ]
 vigenere xs (y:ys) (z:zs) = vigenere_elem xs y z : vigenere xs ys zs
+vigenere xs ys zs
+    | zs == "" = ""
+    | ((length ys) == 0) = zs
+    | otherwise = error "ahhahah"
 
 vigenere_elem :: [Char] -> Int -> Char -> Char
 vigenere_elem [] _ _ = '\0'
-vigenere_elem xs y z = cycle xs !! target_index
-    where
-        target_index = get_index_gt_zero xs (fromJust (elemIndex z xs) + y)
+vigenere_elem xs y z
+    | elemIndex z xs == Nothing = z
+    | otherwise = cycle xs !! target_index
+        where
+            target_index = get_index_gt_zero xs (fromJust (elemIndex z xs) + y)
 
 {--
     Vigenere Decoder
@@ -33,15 +38,20 @@ vigenere_elem xs y z = cycle xs !! target_index
 --}
 
 unvigenere :: [Char] -> [Int] -> String -> String
-unvigenere [] [] [] = []
 unvigenere xs [y] [z] = [ unvigenere_elem xs y z ]
 unvigenere xs (y:ys) (z:zs) = unvigenere_elem xs y z : unvigenere xs ys zs
+unvigenere xs ys zs
+    | zs == "" = ""
+    | ((length ys) == 0) = zs
+    | otherwise = error "ahhahah"
 
 unvigenere_elem :: [Char] -> Int -> Char -> Char
 unvigenere_elem [] _ _ = '\0'
-unvigenere_elem xs y z = cycle xs !! target_index
-    where
-        target_index = get_index_gt_zero xs (fromJust (elemIndex z xs) - y)
+unvigenere_elem xs y z
+    | elemIndex z xs == Nothing = z
+    | otherwise = cycle xs !! target_index
+        where
+            target_index = get_index_gt_zero xs (fromJust (elemIndex z xs) - y)
 
 -- common function for index modulation by xs-length
 get_index_gt_zero :: [Char] -> Int -> Int
